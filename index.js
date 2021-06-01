@@ -21,4 +21,7 @@ mongoose.connect('mongodb+srv://gisellmoros:3.14easyaspi@cluster0.mhzvf.mongodb.
 //request body parser from JSON -> JS Object
 app.use(express.json())
 
+const userRoutes = require('./routes/userRoutes')
+app.use('/api/users',userRoutes)
+
 app.listen(port,() => {console.log(`Server running at Localhost:${port}`)})
