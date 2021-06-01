@@ -37,9 +37,14 @@ module.exports.userLogin = (req,res) => {
 
 module.exports.checkEmail = (req,res) => {
 
+	//since this is used in a post method route, we can use a request body to get our data.
+	//console.log() EVERYTHING, especially incoming data from your requests.
+	//.then() is able to do a task, process the result incoming function it was attached to.
+	//.catch()
 	User.findOne({email: req.body.email})
 	.then(email => {
-
+		//What we can expect to be return by find() is an array
+		//Check if findResult() contains a found document or not:
 		console.log(email)
 
 		if (email === null) {

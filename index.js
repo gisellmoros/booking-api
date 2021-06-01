@@ -24,4 +24,7 @@ app.use(express.json())
 const userRoutes = require('./routes/userRoutes')
 app.use('/api/users',userRoutes)
 
+const courseRoutes = require('./routes/courseRoutes')
+app.use('/api/courses',courseRoutes)
+
 app.listen(port,() => {console.log(`Server running at Localhost:${port}`)})
