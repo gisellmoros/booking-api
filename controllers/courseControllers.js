@@ -25,14 +25,17 @@ module.exports.checkCourse = (req,res) => {
 	.then(findCourse => {
 
 		console.log(findCourse)
-		if(findCourse === null){
+		if(findCourse){
 
-			res.send(false)
+			res.send(true)
 
 		} else {
-			
-			res.send(true)
+
+			res.send(false)
 		}
+	})
+	.catch(error => {
+		res.send(error)
 	})
 
 }
