@@ -27,7 +27,6 @@ req.body.password === req.body.confirmPassword) {
 		lastName: req.body.lastName,
 		email: req.body.email,
 		password: hashedPw,
-		confirmPassword: hashedPw,
 		mobileNo: req.body.mobileNo
 
 	});
@@ -122,9 +121,10 @@ module.exports.getId = (req,res) => {
 */
 
 module.exports.getUserDetails = (req,res) => {
-	console.log(req.params.id)
-	
-	User.findById(req.params.id)
+	console.log(req.user)
+	//req.user = contains the decoded data from our token. IT contains all the data we included when we created our token.
+
+	User.findById(req.user.id,{password:0})
 	.then(user => {
 		res.send(user)
 	})
@@ -132,5 +132,20 @@ module.exports.getUserDetails = (req,res) => {
 		res.send(error)
 	})
 
-	
+};
+
+module.exports.updateUserDetails = (req,res) => {
+
+	let updateUser = {
+		firstName: req.body.firstName,
+		lastName: req.body.lastName,
+		mobileNo: req.body.mobileNo
+	}
+	User.findByIdAndUpdate(req.params.id,updateUser,{new:true})
+	.then(user => {
+		res.send(updateUser)
+	})
+	.catch(error => {
+		res.send(error)
+	})
 }

@@ -18,4 +18,51 @@ module.exports.createAccessToken = (user) => {
 	}
 //create a token with our specific secret
 	return jwt.sign(data,secret,{})
+};
+
+//verify token/decode module
+module.exports.verify = (req,res,next) => {
+//next() will allow us tp proceed either to the next middleware OR finally to the controller.
+//We can pass/find our token in our authorization property found from our req.headers.
+//The token that we passed will be in req.headers.authorization.
+	//console.log(req.headers.authorization)
+
+//check if there is a token being passed:
+let token = req.headers.authorization
+	if(typeof token === "undefined") {
+		//we eill send a message, auth: failed if the route is accessed without a TOKEN.
+		res.send({auth:"failed"})
+	} else {
+		//extract token and remove "Bearer " from our current token:
+		token = token.slice(7,token.length)
+		//console.log(token)
+
+		//verify token
+		jwt.verify(token,secret,function(error,decoded){
+			//decoded is our data decoded from our token.
+			//console.log(decoded)
+			if(error) {
+				res.send({auth:"failed"})
+			} else {
+				console.log(decoded)
+				//we added a new property to our req. called user. And assigned our decoded object to that property.
+				req.user = decoded
+				
+				next()
+			}
+
+		})
+
+	}
+}
+
+module.exports.verifyAdmin = (req,res,next) => {
+
+	//console.log(req.user)
+	if(req.user.isAdmin){
+		next()
+	} else {
+		res.send({auth: "failed"})
+	}
+
 }

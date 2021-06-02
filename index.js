@@ -19,6 +19,7 @@ mongoose.connect('mongodb+srv://gisellmoros:3.14easyaspi@cluster0.mhzvf.mongodb.
 })
 
 //request body parser from JSON -> JS Object
+//Application-Level Middleware -> Middlewares are functions with access to req,res,next objects. Middlewares are used to be able to perform tasks before another task is done.
 app.use(express.json())
 
 const userRoutes = require('./routes/userRoutes')

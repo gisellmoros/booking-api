@@ -20,10 +20,6 @@ const UserSchema = new mongoose.Schema({
 		type: String,
 		required: [true,"Password  is Required."]
 	},
-	confirmPassword: {
-		type: String,
-		required: [true,"Please confirm password."]
-	},
 	//There is no need to require fields that have default value.
 	isAdmin: {
 		type: Boolean,
