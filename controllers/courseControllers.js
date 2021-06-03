@@ -91,7 +91,7 @@ module.exports.updateCourse = (req,res) => {
 module.exports.updateInactive = (req,res) => {
 
 	let updatedCourse = {
-			isActive: "false"
+			isActive: false
 	}
 
 	Course.findByIdAndUpdate(req.params.id,updatedCourse,{new:true})
@@ -107,7 +107,7 @@ module.exports.updateInactive = (req,res) => {
 module.exports.updateActive = (req,res) => {
 
 	let updatedCourse = {
-			isActive: "true"
+			isActive: true
 	}
 
 	Course.findByIdAndUpdate(req.params.id,updatedCourse,{new:true})
@@ -118,4 +118,26 @@ module.exports.updateActive = (req,res) => {
 		res.send(error)
 	})
 
+};
+
+module.exports.getAllActive = (req,res) => {
+
+	Course.find({isActive: true})
+	.then(foundActive => {
+		res.send(foundActive)
+	})
+	.catch(error => {
+		res.send(error)
+	})
+};
+
+module.exports.getAllInactive = (req,res) => {
+
+	Course.find({isActive: false})
+	.then(foundInactive => {
+		res.send(foundInactive)
+	})
+	.catch(error => {
+		res.send(error)
+	})
 };

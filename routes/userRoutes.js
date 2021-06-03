@@ -18,7 +18,7 @@ router.post('/checkEmail',checkEmail);
 //Route-level middlewares has access to the request and response from route.
 router.get('/',verify,getUserDetails);
 
-router.put('/updateUser:id',verify,updateUserDetails);
+router.put('/',verify,updateUserDetails);
 
 module.exports = router
 

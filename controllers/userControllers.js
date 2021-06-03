@@ -136,16 +136,20 @@ module.exports.getUserDetails = (req,res) => {
 
 module.exports.updateUserDetails = (req,res) => {
 
+	//console.log(req.user.id)
+
 	let updateUser = {
 		firstName: req.body.firstName,
 		lastName: req.body.lastName,
 		mobileNo: req.body.mobileNo
 	}
-	User.findByIdAndUpdate(req.params.id,updateUser,{new:true})
-	.then(user => {
+	User.findByIdAndUpdate(req.user.id,updateUser,{new:true})
+	.then(updateUser => {
 		res.send(updateUser)
 	})
 	.catch(error => {
 		res.send(error)
 	})
 }
+
+

@@ -58,7 +58,7 @@ let token = req.headers.authorization
 
 module.exports.verifyAdmin = (req,res,next) => {
 
-	//console.log(req.user)
+	//console.log(req.user.isAdmin)
 	if(req.user.isAdmin){
 		next()
 	} else {
