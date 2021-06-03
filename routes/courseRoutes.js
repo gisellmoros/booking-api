@@ -22,7 +22,7 @@ router.get('/:id',getSingleCourse);
 
 router.get('/getActive',getAllActive);
 
-router.get('/getInactive',getAllInactive);
+router.get('/getInactive',verify,verifyAdmin,getAllInactive);
 
 //update course
 router.put('/:id',verify,verifyAdmin,updateCourse);
