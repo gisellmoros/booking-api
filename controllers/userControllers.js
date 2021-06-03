@@ -1,4 +1,5 @@
 const User = require('../models/User')
+const Course = require('../models/Course')
 const bcrypt = require('bcrypt')
 const {createAccessToken} = require('../auth.js')
 
@@ -11,15 +12,16 @@ module.exports.welcomeUser = (req,res) => {
 
 //bcrypt.hashSync(<stringToBeHashed>,<saltRounds>)
 
-if(req.body.password.length >= 8 &&
-req.body.password === req.body.confirmPassword) {
-	res.send(true)
-}	else {res.send(false)};
-
-
 	const hashedPw = bcrypt.hashSync(req.body.password,10);
 
 	console.log(hashedPw);
+
+	if(req.body.password.length < 8) {
+		res.send(false)
+	} 
+	else if (req.body.password !== req.body.confirmPassword) {
+		res.send(false)
+	} else {
 
 	let newUser = new User ({
 
@@ -29,7 +31,7 @@ req.body.password === req.body.confirmPassword) {
 		password: hashedPw,
 		mobileNo: req.body.mobileNo
 
-	});
+	})
 
 	newUser.save()
 	.then(user => {
@@ -38,6 +40,8 @@ req.body.password === req.body.confirmPassword) {
 	.catch(err => {
 		res.send(err)
 	})
+
+  }
 
 };
 
@@ -150,6 +154,47 @@ module.exports.updateUserDetails = (req,res) => {
 	.catch(error => {
 		res.send(error)
 	})
+}
+
+module.exports.enroll = (req,res) => {
+
+	//console.log(req.body)
+
+	if(req.user.isAdmin === true) {
+			res.send({auth:"failed"})
+
+		} else {
+
+	User.findById(req.user.id)
+	.then(foundUser => {
+
+		foundUser.enrollments.push(req.body)
+
+		return foundUser.save()
+
+	})
+	.then((user) => {
+
+		console.log(user)
+
+		return Course.findById(req.body.courseId)
+	})
+	.then(course => {
+
+
+		course.enrollees.push({userId: req.user.id})
+		return course.save()
+
+	})
+	.then(course => {
+
+		res.send(course)
+	})
+	.catch(error => {
+		res.send(error)
+	})
+
+  }
 }
 
 

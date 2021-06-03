@@ -4,7 +4,8 @@ const{	welcomeUser,
 		login,
 		checkEmail,
 		getUserDetails,
-		updateUserDetails} = require('../controllers/userControllers')
+		updateUserDetails,
+		enroll} = require('../controllers/userControllers')
 const {verify} = require('../auth')
 
 router.post('/',welcomeUser);
@@ -19,6 +20,9 @@ router.post('/checkEmail',checkEmail);
 router.get('/',verify,getUserDetails);
 
 router.put('/',verify,updateUserDetails);
+
+//enroll
+router.post('/enroll',verify,enroll);
 
 module.exports = router
 

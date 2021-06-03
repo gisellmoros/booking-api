@@ -24,7 +24,7 @@ const CourseSchema = new mongoose.Schema({
 	},
 	enrollees: [
 		{
-			studentId: {
+			userId: {
 				type: String,
 				required: [true,"Student ID is required."]
 			},

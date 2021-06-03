@@ -141,3 +141,4 @@ module.exports.getAllInactive = (req,res) => {
 		res.send(error)
 	})
 };
+
