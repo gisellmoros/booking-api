@@ -7,7 +7,7 @@ const {createAccessToken} = require('../auth.js')
 
 module.exports.welcomeUser = (req,res) => {
 
-//console.log(req.body)
+console.log(req.body)
 //Check if you can get the body of your request properly before you process it.
 
 //bcrypt.hashSync(<stringToBeHashed>,<saltRounds>)
@@ -61,6 +61,11 @@ module.exports.login = (req,res) => {
 
 			//Check if the password is correct
 			if(isPasswordCorrect){
+				/*const token = auth.createAccessToken(user);
+				res.send({
+					accessToken: token,
+					message: `Hi ${user.firstName}, you successfully logged in.`,
+				});*/
 				//send the token to the client if user is found and password is correct.
 				res.send({accessToken: createAccessToken(foundUser)})
 				//Send false to client if password is incorrect
@@ -69,13 +74,13 @@ module.exports.login = (req,res) => {
 			}
 		}
 
-		
-
 	})
 	.catch(error => {
 		res.send(error)
 	})
 };
+
+
 
 module.exports.checkEmail = (req,res) => {
 
@@ -162,7 +167,7 @@ module.exports.enroll = (req,res) => {
 
 	if(req.user.isAdmin === true) {
 			res.send({auth:"failed"})
-
+			
 		} else {
 
 	User.findById(req.user.id)
